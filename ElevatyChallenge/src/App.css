@@ -1,0 +1,100 @@
+/* HEADER STYLE */
+body {
+  background: #EEEEEE;
+}
+
+header {
+  height: 8vh;
+  width: 100vw;
+  background: #222831;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #EEEEEE;
+}
+
+header .page-title {
+  color: #EEEEEE;
+  font-weight: bold;
+  font-size: 1.8rem;
+  margin-left: 1rem;
+  border-left: 1px solid lightgrey;
+  padding-left: 1rem;
+}
+
+
+.person-card {
+  width: 30%;
+  border: 2px solid #393E46;
+  border-radius: 5px;
+  margin-top: 50px;
+  background: lightgrey;
+  padding: 1.5rem;
+  transition: all 2s 0s ease;
+  display: inline-block;
+  margin: 1.5rem;
+  vertical-align: top;
+  transition: all 2s 0s ease;
+}
+
+.person-card .main-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-separation {
+  display: block;
+  margin: 0 auto;
+  height: 1px;
+  width: 100%;
+  background-color: lightslategrey;
+  margin-top: 0.5rem;
+}
+
+.card-interactions {
+  display: flex;
+  column-gap: 5px;
+}
+
+.card-interactions button {
+  padding: 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  height: 40px;
+  font-weight: bold;
+  border: 1.5px solid #393E46;
+}
+
+.card-interactions .show-details {
+  background-color: #00ADB5;
+}
+
+.card-interactions .drop-user-warning {
+  background-color: #F05941;
+}
+
+.details {
+  margin-top: 1rem;
+}
+
+.date-form {
+  display: flex;
+  width: 30%;
+  align-items: center;
+  column-gap: 5px;
+  margin-right: 10vw;
+}
+
+.date-form label {
+  font-weight: bold;
+}
+
+.date-form input[type="button"] {
+  background: #393E46;
+  color: #EEEEEE;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+  padding: 3px;
+}
