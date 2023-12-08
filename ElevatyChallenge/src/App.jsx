@@ -5,17 +5,32 @@ import "./App.css";
 
 function App() {
   const [apiData, setApiData] = useState([]);
+  const [startRequest, setStartRequest] = useState(false);
   const [creditCardData, setCreditCardData] = useState({});
 
   useEffect(() => {
-    fetch("https://fakerapi.it/api/v1/credit_cards?_quantity=1")
-      .then((response) => response.json())
-      .then((data) => setCreditCardData(data));
-  }, []);
+    if (startRequest) {
+      fetch(
+        `https://fakerapi.it/api/v1/persons?_quantity=30&_birthday_start=2004-06-05&_birthday_end=2007-06-05`
+      )
+        .then((response) => response.json())
+        .then((data) => setApiData(data.data));
+
+      fetch("https://fakerapi.it/api/v1/credit_cards?_quantity=1")
+        .then((response) => response.json())
+        .then((data) => setCreditCardData(data));
+      setStartRequest((prevStatus) => !prevStatus);
+    }
+  }, [startRequest]);
 
   return (
     <>
-      <Header title="Search System" apiData={apiData} setApiData={setApiData} />
+      <Header
+        title="Search System"
+        apiData={apiData}
+        setApiData={setApiData}
+        setStartRequest={setStartRequest}
+      />
       <Main
         apiData={apiData}
         setApiData={setApiData}

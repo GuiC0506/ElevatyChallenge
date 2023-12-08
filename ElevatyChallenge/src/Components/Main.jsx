@@ -3,7 +3,6 @@ import PersonCard from "./PersonCard";
 import "../App.css";
 
 function Main(props) {
-  console.log(props);
   // use state para os elementos
   return (
     <main>

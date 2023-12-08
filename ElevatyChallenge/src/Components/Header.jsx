@@ -10,6 +10,7 @@ function Header(props) {
         setApiData={props.setApiData}
         setCreditCardData={props.setCreditCardData}
         creditCardData={props.creditCardData}
+        setStartRequest={props.setStartRequest}
       />
     </header>
   );
