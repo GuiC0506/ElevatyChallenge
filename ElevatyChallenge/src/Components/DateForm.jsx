@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import "../App.css";
 
@@ -15,12 +15,18 @@ function DateForm(props) {
     }));
   }
 
-  function makeRequest() {
-    fetch(
-      `https://fakerapi.it/api/v1/persons?_birthday_start=${formData.startDate}&_birthday_end=${formData.endDate}`
-    )
-      .then((response) => response.json())
-      .then((data) => props.setApiData(data.data));
+  async function makeRequest() {
+    const peopleResponse = await fetch(
+      `https://fakerapi.it/api/v1/persons?_quantity=30&_birthday_start=${formData.startDate}&_birthday_end=${formData.endDate}`
+    );
+
+    const peopleData = await peopleResponse.json();
+    props.setApiData((prevData) => peopleData.data);
+    const creditCardResponse = await fetch(
+      "https://fakerapi.it/api/v1/credit_cards?_quantity=1"
+    );
+    const creditCardData = await creditCardResponse.json();
+    props.setCreditCardData((prevData) => creditCardData);
   }
 
   return (

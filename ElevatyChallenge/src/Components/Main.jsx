@@ -1,9 +1,9 @@
 import React from "react";
-import DateForm from "./DateForm";
-import { useState } from "react";
 import PersonCard from "./PersonCard";
+import "../App.css";
 
 function Main(props) {
+  console.log(props);
   // use state para os elementos
   return (
     <main>
@@ -15,6 +15,7 @@ function Main(props) {
               person={person}
               apiData={props.apiData}
               setApiData={props.setApiData}
+              creditCardData={props.creditCardData.data}
             />
           );
         })}
