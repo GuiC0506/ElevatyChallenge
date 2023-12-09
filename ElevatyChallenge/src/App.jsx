@@ -8,12 +8,29 @@ function App() {
   const [creditCardData, setCreditCardData] = useState({});
   const [companyData, setCompanyData] = useState({});
   const [productData, setProductData] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [searchItem, setSearchItem] = useState("");
+
   async function fetchClientData(startDate, endDate) {
     const response = await fetch(
       `https://fakerapi.it/api/v1/persons?_quantity=30&_birthday_start=${startDate}&_birthday_end=${endDate}`
     );
     const { data } = await response.json();
+    sortClientsAlphabetically(data);
     setClientData(data);
+    setFilteredUsers(data);
+  }
+
+  function sortClientsAlphabetically(array) {
+    array.sort(function (a, b) {
+      if (a.firstname < b.firstname) {
+        return -1;
+      }
+      if (a.firstname > b.firstname) {
+        return 1;
+      }
+      return 0;
+    });
   }
 
   async function fetchCreditCardData() {
@@ -35,7 +52,7 @@ function App() {
 
   async function fetchProductsData() {
     const response = await fetch(
-      "https://fakerapi.it/api/v1/products?_quantity=30"
+      "https://fakerapi.it/api/v1/products?_quantity=10"
     );
     const { data } = await response.json();
     setProductData(data);
@@ -47,9 +64,16 @@ function App() {
 
   return (
     <>
-      <Header title="Search System" fetchClientData={fetchClientData} />
-      <Main
+      <Header
+        title="Search System"
+        fetchClientData={fetchClientData}
+        setFilteredUsers={setFilteredUsers}
         clientData={clientData}
+        setSearchItem={setSearchItem}
+        filteredUsers={filteredUsers}
+      />
+      <Main
+        clientData={filteredUsers}
         setClientData={setClientData}
         companyData={companyData}
         creditCardData={creditCardData}

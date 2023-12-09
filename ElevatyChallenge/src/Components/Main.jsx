@@ -8,7 +8,9 @@ function Main({
   creditCardData,
   companyData,
   productData,
+  filteredUsers,
 }) {
+  // console.log(filteredUsers);
   return (
     <main>
       <section className="people-section">

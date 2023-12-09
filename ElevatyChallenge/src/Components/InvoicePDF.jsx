@@ -1,6 +1,19 @@
 import React from "react";
-import { Page, Text, Document, StyleSheet, View } from "@react-pdf/renderer";
+import {
+  Page,
+  Text,
+  Document,
+  StyleSheet,
+  View,
+  Font,
+} from "@react-pdf/renderer";
+import Poppins from "../Fonts/Poppins-Regular.ttf";
 import "../App.css";
+
+Font.register({
+  family: "Poppins",
+  src: Poppins,
+});
 
 const styles = StyleSheet.create({
   body: {
@@ -10,22 +23,26 @@ const styles = StyleSheet.create({
     paddingBottom: 65,
     paddingHorizontal: 35,
     backgroundColor: "#fefefe",
+    fontFamily: "Poppins",
   },
   header: {
-    width: "70%",
-    height: "20px",
+    maxWidth: "65%",
+    minHeight: "20px",
     paddingVertical: "5px",
     backgroundColor: "#dde4fe",
     color: "black",
   },
 
   section: {
-    height: "70px",
-    width: "150px",
+    minHeight: "70px",
+    minWidth: "150px",
+    maxWidth: "220px",
+    textOverflow: "ellipsis",
     color: "black",
     fontSize: 10,
-    marginTop: "1rem",
+    marginTop: "16px",
     backgroundColor: "#dde4fe",
+    padding: "6px",
   },
 
   locationAndEmails: {
@@ -34,13 +51,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     columnGap: "5px",
     justifyContent: "flex-start",
-  },
-
-  tableCell: {
-    fontSize: 12,
-    color: "grey",
-    backgroundColor: "#dde4fe",
-    width: "20%",
+    marginBottom: "8px",
   },
 
   tableHeader: {
@@ -52,6 +63,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: "10px",
     alignItems: "center",
+    paddingHorizontal: "7px",
   },
 
   tableRow: {
@@ -78,6 +90,14 @@ const styles = StyleSheet.create({
     color: "grey",
     width: "70%",
     marginBottom: "20px",
+  },
+
+  bottomSection: {
+    display: "flex",
+    flexDirection: "row",
+    columnGap: "25px",
+    justifyContent: "space-between",
+    marginTop: "10px",
   },
 });
 
@@ -106,7 +126,7 @@ function PDFFile({ person, company, productData }) {
             { flexBasis: "20%", textAlign: "right" },
           ]}
         >
-          {product.name}
+          ${product.price}
         </Text>
         <Text
           style={[
@@ -114,7 +134,7 @@ function PDFFile({ person, company, productData }) {
             { flexBasis: "20%", textAlign: "right" },
           ]}
         >
-          {product.name}
+          {product.qty}
         </Text>
         <Text
           style={[
@@ -122,13 +142,13 @@ function PDFFile({ person, company, productData }) {
             { flexBasis: "20%", textAlign: "right" },
           ]}
         >
-          {product.name}
+          5
         </Text>
       </View>
     );
   });
 
-  console.log(person.address);
+  // console.log(person.address);
   const { street, city, country, zipcode } = person.address;
   return (
     <Document style={{ padding: 0, margin: 0 }}>
@@ -149,7 +169,9 @@ function PDFFile({ person, company, productData }) {
             <Text>{person.website}</Text>
           </View>
         </View>
-        <Text style={{ fontSize: "10px", marginTop: "20px" }}>Billed to</Text>
+        <Text style={{ fontSize: "10px", marginVertical: "4px" }}>
+          Billed to
+        </Text>
         <View style={[styles.section, { marginBottom: "20px" }]}>
           <Text>
             {person.firstname} {person.lastname}
@@ -161,43 +183,53 @@ function PDFFile({ person, company, productData }) {
           <Text>Zip Code: {zipcode}</Text>
           <Text>{person.phone}</Text>
         </View>
-        <View style={{ width: "80%" }} id="table">
-          <View id="table-header" style={styles.tableHeader}>
-            <Text
-              style={{
-                flexBasis: "40%",
-                textAlign: "left",
-              }}
-            >
-              Description{" "}
-            </Text>
-            <Text
-              style={{
-                flexBasis: "20%",
-                textAlign: "right",
-              }}
-            >
-              Unit cost
-            </Text>
-            <Text
-              style={{
-                flexBasis: "20%",
-                textAlign: "right",
-              }}
-            >
-              QTY/HR Rate
-            </Text>
-            <Text
-              style={{
-                flexBasis: "20%",
-                textAlign: "right",
-              }}
-            >
-              Amount
-            </Text>
+        <View id="bottom-section" style={styles.bottomSection}>
+          <View id="invoice-date">
+            <Text>Invoice</Text>
+            <Text>Invoice number</Text>
+            <Text>{new Date().toLocaleDateString("en-US")}</Text>
+            <Text>Invoice</Text>
           </View>
-          <View style={{ padding: "5px", backgroundColor: "#fefefe" }}>
-            {tableData}
+          <View style={{ width: "70%" }} id="table">
+            <View id="table-header" style={styles.tableHeader}>
+              <Text
+                style={{
+                  flexBasis: "40%",
+                  textAlign: "left",
+                }}
+              >
+                Description{" "}
+              </Text>
+              <Text
+                style={{
+                  flexBasis: "20%",
+                  textAlign: "right",
+                }}
+              >
+                Unit cost
+              </Text>
+              <Text
+                style={{
+                  flexBasis: "20%",
+                  textAlign: "right",
+                }}
+              >
+                QTY/HR Rate
+              </Text>
+              <Text
+                style={{
+                  flexBasis: "20%",
+                  textAlign: "right",
+                }}
+              >
+                Amount
+              </Text>
+            </View>
+            <View
+              style={{ padding: "5px", backgroundColor: "rgb(240, 240, 240)" }}
+            >
+              {tableData}
+            </View>
           </View>
         </View>
       </Page>

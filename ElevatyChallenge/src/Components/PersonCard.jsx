@@ -46,6 +46,7 @@ function PersonCard({
         </p>
         <p>Credit Card: {creditCardData.type}</p>
         <BlobProvider
+          fileName={"TEST"}
           document={
             <PDFFile
               person={person}
@@ -66,7 +67,9 @@ function PersonCard({
 
   const userDeletion = (
     <div className="user-deletion">
-      <p style={{ fontWeight: "bold" }}>Do you really want do delete it?</p>
+      <p style={{ fontWeight: "bold" }}>
+        Delete the user <span className="user-top-delete">"{fullname}"</span> ?
+      </p>
       <div className="deletion-options">
         <button onClick={deleteUser} className="delete-warning">
           Delete
