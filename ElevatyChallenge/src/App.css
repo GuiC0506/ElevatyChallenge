@@ -1,21 +1,19 @@
 /* HEADER STYLE */
 body {
-  background: #eeeeee;
   /* overflow-x: hidden; */
+  background-color: #B4B8AB;
 }
 
 header {
-  height: 8vh;
-  width: 100vw;
-  background: #222831;
+  min-height: 8vh;
+  background: #153243;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #eeeeee;
+  color: white;
 }
 
 header .page-title {
-  color: #eeeeee;
   font-weight: bold;
   font-size: 1.8rem;
   margin-left: 1rem;
@@ -30,20 +28,18 @@ header .page-title {
 }
 
 .person-card {
-  width: 30%;
-  border: 1px solid #393e46;
+  float:right;
+  clear:left;
+  min-width: 35vw;
+  max-width: 10vw; 
   border-radius: 5px;
-  margin-top: 50px;
-  background: lightgrey;
-  padding: 1.5rem;
-  transition: all 2s 0s ease;
+  background: #ECECEC;
+  padding: 1.1rem;
   display: inline-block;
-  margin: 1.5rem;
-  vertical-align: middle;
-  transition: all 2s 0s ease;
-  box-shadow: 0px 4px 10px rgba(160, 160, 160, 0.8);
+  margin: 1rem;
+  vertical-align: bottom;
+  box-shadow: 1px 7px 23px 0px rgba(117,117,117,0.75);
   position: relative;
-  overflow: hidden;
 }
 
 .person-card-inner .main-info {
@@ -67,20 +63,30 @@ header .page-title {
 }
 
 .card-interactions button {
-  padding: 0.5rem;
-  border-radius: 8px;
+  padding: 0.3rem;
+  border-radius: 4px;
   cursor: pointer;
-  height: 40px;
-  font-weight: bold;
+  /* font-weight: bold; */
   border: 1.5px solid #393e46;
 }
 
 .card-interactions .show-details {
-  background-color: #00adb5;
+  background-color: #284B63;
+  color: white;
+  outline-style: none;
+}
+
+.card-interactions .show-details:hover {
+  background-color: #38627e;
 }
 
 .card-interactions .drop-user-warning {
-  background-color: #f05941;
+  background-color: #C70039;
+  color: white;
+}
+
+.card-interactions .drop-user-warning:hover {
+  background-color: #c5325c;
 }
 
 .details {
@@ -89,45 +95,74 @@ header .page-title {
 
 .date-form {
   display: flex;
-  width: 30%;
+  min-width: 30%;
   align-items: center;
   column-gap: 5px;
   margin-right: 10vw;
 }
 
-.date-form label {
-  font-weight: bold;
+.date-form input[type="date"] {
+  padding-inline: 5px;
+  padding-block: 3px;
+  text-align: center;
+  letter-spacing: 0.2ch;
+
 }
 
-.date-form input[type="button"] {
-  background: #393e46;
-  color: #eeeeee;
+.date-form label {
+  font-weight: bold;
+  width: auto;
+}
+
+.date-form button[type="submit"] {
+  background: #284B63;
+  color: white;
   cursor: pointer;
   border-radius: 5px;
   font-weight: bold;
+  padding: 0.5rem;
+  outline-style: none;
+  border: none;
+}
+
+.date-form button[type="submit"]:hover {
+  background: #406d8b;
+}
+
+::-webkit-calendar-picker-indicator{
+  background-color: #95bcd6;
   padding: 3px;
+  cursor: pointer;
+  border-radius: 3px;
 }
 
 .user-deletion {
-  display: flex;
-  position: absolute;
-  background: lightgrey;
-  align-items: center;
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background: #ECECEC;
+  align-items: center;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   justify-content: center;
   align-items: center;
   border-radius: inherit;
-  column-gap: 0.8rem;
+  gap: 0.4rem;
+}
+
+.deletion-options {
+  display: flex;
+  margin: 0 auto;
+  column-gap: 5px;
 }
 
 .user-deletion button {
-  padding: 0.6rem;
+  padding: 0.3rem;
   border-radius: 5px;
-  width: 15%;
+  width: 100%;
   font-weight: bold;
   cursor: pointer;
 }
@@ -140,4 +175,10 @@ header .page-title {
 .delete-cancel {
   background: lightgreen;
   border: 1px solid #116d6e;
+}
+
+.fullname {
+  padding-left: 1rem;
+  padding-block: 0.2rem ;
+  border-left: 2px solid #B4B8AB;
 }

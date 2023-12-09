@@ -2,19 +2,27 @@ import React from "react";
 import PersonCard from "./PersonCard";
 import "../App.css";
 
-function Main(props) {
-  // use state para os elementos
+function Main({
+  clientData,
+  setClientData,
+  creditCardData,
+  companyData,
+  productData,
+}) {
   return (
     <main>
       <section className="people-section">
-        {props.apiData.map((person) => {
+        {clientData.map((person) => {
           return (
             <PersonCard
+              key={person.id}
               id={person.id}
               person={person}
-              apiData={props.apiData}
-              setApiData={props.setApiData}
-              creditCardData={props.creditCardData.data}
+              clientData={clientData}
+              setClientData={setClientData}
+              creditCardData={creditCardData}
+              companyData={companyData}
+              productData={productData}
             />
           );
         })}

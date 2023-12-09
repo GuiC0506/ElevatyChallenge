@@ -1,42 +1,42 @@
-import React, { useEffect } from "react";
 import { useState } from "react";
 import "../App.css";
 
-function DateForm(props) {
-  const [formData, setFormData] = useState({
-    startDate: "2004-06-05",
-    endDate: "2007-06-05",
+function DateForm({ fetchClientData }) {
+  const [dateRange, setDateRange] = useState({
+    startDate: "2004-05-06",
+    endDate: "2007-05-06",
   });
 
   function handleChange(event) {
-    setFormData((prevData) => ({
+    setDateRange((prevData) => ({
       ...prevData,
       [event.target.name]: event.target.value,
     }));
   }
 
-  async function makeRequest() {
-    props.setStartRequest((prev) => !prev);
+  function handleSubmit(event) {
+    event.preventDefault();
+    fetchClientData(dateRange.startDate, dateRange.endDate);
   }
 
   return (
     <>
-      <form className="date-form">
+      <form className="date-form" onSubmit={(e) => handleSubmit(e)}>
         <label htmlFor="startDate">Start date</label>
         <input
           type="date"
           name="startDate"
           onChange={handleChange}
-          value={formData.startDate}
+          value={dateRange.startDate}
         />
         <label htmlFor="endDate">End date</label>
         <input
           type="date"
           name="endDate"
           onChange={handleChange}
-          value={formData.endDate}
+          value={dateRange.endDate}
         />
-        <input type="button" onClick={makeRequest} value="Submit" />
+        <button type="submit">Submit</button>
       </form>
     </>
   );
