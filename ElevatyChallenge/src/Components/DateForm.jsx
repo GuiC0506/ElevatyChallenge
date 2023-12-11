@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../App.css";
 
-function DateForm({ fetchClientData, setRenderSearchBar }) {
+function DateForm({ fetchClientData, setShowWelcomeMessage }) {
   const [dateRange, setDateRange] = useState({
     startDate: "2004-05-06",
     endDate: "2007-05-06",
@@ -16,6 +16,7 @@ function DateForm({ fetchClientData, setRenderSearchBar }) {
 
   function handleSubmit(event) {
     event.preventDefault();
+    setShowWelcomeMessage(false);
     fetchClientData(dateRange.startDate, dateRange.endDate);
   }
 

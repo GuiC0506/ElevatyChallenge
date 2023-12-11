@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Header from "./Components/Header";
 import Main from "./Components/Main";
-import Footer from "./Components/Footer";
 import "./App.css";
 
 function App() {
@@ -11,11 +10,12 @@ function App() {
   const [productData, setProductData] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [searchItem, setSearchItem] = useState("");
-  const [showNoUser, setNoShowUser] = useState(false);
+  const [showWelcomeMessage, setShowWelcomeMessage] = useState(false);
+  const [imageUrls, setImageURLs] = useState([]);
 
   async function fetchClientData(startDate, endDate) {
     const response = await fetch(
-      `https://fakerapi.it/api/v1/persons?_quantity=30&_birthday_start=${startDate}&_birthday_end=${endDate}`
+      `https://fakerapi.it/api/v1/persons?_quantity=50&_birthday_start=${startDate}&_birthday_end=${endDate}`
     );
     const { data } = await response.json();
     sortClientsAlphabetically(data);
@@ -54,39 +54,50 @@ function App() {
 
   async function fetchProductsData() {
     const response = await fetch(
-      "https://fakerapi.it/api/v1/products?_quantity=8"
+      "https://fakerapi.it/api/v1/products?_quantity=8&_price_min=1&_price_max=100&_taxes=20"
     );
     const { data } = await response.json();
     setProductData(data);
   }
 
+  async function fetchImagesData() {
+    const response = await fetch(
+      "https://fakerapi.it/api/v1/images?_quantity=10&_type=kittens&"
+    );
+    const { data } = await response.json();
+    const urls = data.map((image) => image.url);
+    setImageURLs(urls);
+  }
+
+  const welcomeMessage = <h1 className="welcome-message">You are welcome!</h1>;
+
   useEffect(() => {
-    fetchCreditCardData(), fetchCompanyName(), fetchProductsData();
+    fetchCreditCardData(),
+      fetchCompanyName(),
+      fetchProductsData(),
+      fetchImagesData(),
+      setShowWelcomeMessage(true);
   }, []);
 
   return (
     <>
       <Header
-        title="Search System"
         fetchClientData={fetchClientData}
         setFilteredUsers={setFilteredUsers}
         clientData={clientData}
         setSearchItem={setSearchItem}
+        setShowWelcomeMessage={setShowWelcomeMessage}
         filteredUsers={filteredUsers}
-        setNoShowUser={setNoShowUser}
       />
       <Main
         clientData={filteredUsers}
-        setClientData={setClientData}
         companyData={companyData}
         creditCardData={creditCardData}
         productData={productData}
         setFilteredUsers={setFilteredUsers}
-        setSearchItem={setSearchItem}
-        filteredUsers={filteredUsers}
-        showNoUser={showNoUser}
+        showWelcomeMessage={showWelcomeMessage}
+        imageUrls={imageUrls}
       />
-      {/* <Footer /> */}
     </>
   );
 }

@@ -6,6 +6,7 @@ import {
   StyleSheet,
   View,
   Font,
+  Image,
 } from "@react-pdf/renderer";
 import Poppins from "../Fonts/Poppins-Regular.ttf";
 import "../App.css";
@@ -40,9 +41,15 @@ const styles = StyleSheet.create({
     textOverflow: "ellipsis",
     color: "black",
     fontSize: 10,
-    marginTop: "16px",
+    marginTop: "3px",
     backgroundColor: "#dde4fe",
     padding: "6px",
+  },
+
+  topSection: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 
   locationAndEmails: {
@@ -138,18 +145,34 @@ const styles = StyleSheet.create({
     marginLeft: "394px",
     backgroundColor: "#5e707a",
   },
+
+  invoiceTotalSection: {
+    marginTop: "9px",
+    marginLeft: "420px",
+    width: "105px",
+  },
 });
 
-function PDFFile({ person, company, productData }) {
+function PDFFile({ person, company, productData, imageUrl }) {
   let products = [];
   productData.forEach((product) => {
+    let qty = Math.ceil(Math.random() * 8);
     products.push({
       id: product.id,
       name: product.name,
       price: parseFloat(product.price),
-      qty: 1,
+      qty: qty,
+      totalPrice: qty * product.price,
     });
   });
+
+  let usDollarFormmat = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+  let totalPrice = 0;
+  const prices = products.map((product) => product.totalPrice);
+  prices.forEach((price) => (totalPrice += price));
 
   const tableData = products.map((product) => {
     return (
@@ -165,7 +188,7 @@ function PDFFile({ person, company, productData }) {
             { flexBasis: "20%", textAlign: "right" },
           ]}
         >
-          ${product.price}
+          {usDollarFormmat.format(product.price)}
         </Text>
         <Text
           style={[
@@ -181,13 +204,12 @@ function PDFFile({ person, company, productData }) {
             { flexBasis: "20%", textAlign: "right" },
           ]}
         >
-          5
+          {product.qty}
         </Text>
       </View>
     );
   });
 
-  // console.log(person.address);
   const { street, city, country, zipcode } = person.address;
   return (
     <Document style={{ padding: 0, margin: 0 }}>
@@ -198,19 +220,31 @@ function PDFFile({ person, company, productData }) {
         >
           {company}
         </Text>
-        <View style={[styles.locationAndEmails]}>
-          <View style={styles.section}>
-            <Text>
-              {street}, {city} - {country}
-            </Text>
-            <Text>Zip Code: {zipcode}</Text>
+        <View style={styles.topSection}>
+          <View style={[styles.locationAndEmails]}>
+            <View style={styles.section}>
+              <Text>
+                {street}, {city} - {country}
+              </Text>
+              <Text>Zip Code: {zipcode}</Text>
+            </View>
+            <View style={styles.section}>
+              <Text>{person.phone}</Text>
+              <Text>{person.email}</Text>
+              <Text>{person.website}</Text>
+            </View>
           </View>
-          <View style={styles.section}>
-            <Text>{person.phone}</Text>
-            <Text>{person.email}</Text>
-            <Text>{person.website}</Text>
-          </View>
+          <Image
+            src={imageUrl}
+            style={{
+              width: "80px",
+              height: "80px",
+              alignSelf: "flex-start",
+              marginTop: "5px",
+            }}
+          />
         </View>
+
         <Text style={{ fontSize: "10px", marginTop: "4px" }}>Billed to</Text>
         <View
           style={[styles.section, { marginBottom: "20px", marginTop: "0px" }]}
@@ -228,16 +262,20 @@ function PDFFile({ person, company, productData }) {
         <View id="bottom-section" style={styles.bottomSection}>
           <View id="invoice-date">
             <Text style={{ color: "#5e707a" }}>Invoice</Text>
-            <Text style={{ color: "#5e707a", fontSize: "12px" }}>
+            <Text
+              style={{ color: "#5e707a", fontSize: "12px", marginLeft: "4px" }}
+            >
               Invoice number
+            </Text>
+            <Text style={styles.invoiceDate}>00001</Text>
+            <Text
+              style={{ color: "#5e707a", fontSize: "12px", marginLeft: "4px" }}
+            >
+              Date of issue
             </Text>
             <Text style={styles.invoiceDate}>
               {new Date().toLocaleDateString("en-US")}
             </Text>
-            <Text style={{ color: "#5e707a", fontSize: "12px" }}>
-              Date of issue
-            </Text>
-            <Text style={styles.invoiceDate}>00001</Text>
           </View>
           <View style={{ width: "70%" }} id="table">
             <View id="table-header" style={styles.tableHeader}>
@@ -291,13 +329,45 @@ function PDFFile({ person, company, productData }) {
             </View>
             <View style={styles.resumeRightSide}>
               <Text style={{ textAlign: "right" }}>$0</Text>
-              <Text style={{ textAlign: "right" }}>$0</Text>
-              <Text style={{ textAlign: "right" }}>$0</Text>
-              <Text style={{ textAlign: "right" }}>$0</Text>
+              <Text
+                style={{
+                  textAlign: "right",
+                  borderBottom: "1.2px solid #A09BE7",
+                }}
+              >
+                $0
+              </Text>
+              <Text style={{ textAlign: "right" }}>5%</Text>
+              <Text style={{ textAlign: "right" }}>$0.00</Text>
             </View>
           </View>
         </View>
         <View style={styles.sectionSeparation}></View>
+        <View style={styles.invoiceTotalSection}>
+          <Text
+            style={{ fontSize: "12px", color: "#5e707a", textAlign: "right" }}
+          >
+            Invoice Total
+          </Text>
+          <Text
+            style={{
+              color: "#5e707a",
+              fontSize: "16px",
+              backgroundColor: "#dde4fe",
+              textAlign: "right",
+              padding: "2.5px",
+              marginTop: "3px",
+            }}
+          >
+            {usDollarFormmat.format(totalPrice)}
+          </Text>
+        </View>
+        <View>
+          <Text style={{ fontSize: "12px" }}>TERMS</Text>
+          <Text style={{ fontSize: "10px" }}>
+            Please pay invoice by {new Date().toLocaleDateString("en-US")}
+          </Text>
+        </View>
       </Page>
     </Document>
   );

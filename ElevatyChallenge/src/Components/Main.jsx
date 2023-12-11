@@ -4,34 +4,34 @@ import "../App.css";
 
 function Main({
   clientData,
-  setClientData,
   creditCardData,
   companyData,
   productData,
   setFilteredUsers,
-  filteredUsers,
-  showNoUser,
+  showWelcomeMessage,
+  imageUrls,
 }) {
-  const noUsers = <h1>No user</h1>;
   return (
     <main>
+      {showWelcomeMessage && (
+        <h1 className="welcome-message">You are welcome!</h1>
+      )}
       <section className="people-section">
-        {clientData.map((person) => {
+        {clientData.map((person, i) => {
           return (
             <PersonCard
               key={person.id}
               id={person.id}
               person={person}
               clientData={clientData}
-              setClientData={setClientData}
               creditCardData={creditCardData}
               companyData={companyData}
               productData={productData}
               setFilteredUsers={setFilteredUsers}
+              imageUrl={imageUrls[Math.floor(Math.random() * imageUrls.length)]}
             />
           );
         })}
-        {showNoUser && noUsers}
       </section>
     </main>
   );

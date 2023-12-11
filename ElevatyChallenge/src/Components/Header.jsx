@@ -4,13 +4,12 @@ import elevatyLogo from "../assets/elevaty_logo.jpg";
 import searchIcon from "../assets/search_icon.png";
 
 function Header({
-  title,
   fetchClientData,
   setFilteredUsers,
   clientData,
   setSearchItem,
+  setShowWelcomeMessage,
   filteredUsers,
-  setNoShowUser,
 }) {
   const [renderSearchBar, setRenderSearchBar] = useState(false);
 
@@ -23,7 +22,6 @@ function Header({
       return fullname.toLowerCase().includes(itemSearched.toLowerCase());
     });
     setFilteredUsers(filteredItems);
-    filteredUsers.length === 0 ? setNoShowUser(true) : setNoShowUser(false);
   }
 
   const searchBar = (
@@ -43,14 +41,21 @@ function Header({
       <header>
         <div style={{ display: "flex", alignItems: "center" }}>
           <img src={elevatyLogo} alt="logo" className="logo" />
-          <h1 className="page-title">{title}</h1>
+          <h1 className="page-title">Search System</h1>
         </div>
         <DateForm
           fetchClientData={fetchClientData}
-          setRenderSearchBar={setRenderSearchBar}
+          setShowWelcomeMessage={setShowWelcomeMessage}
         />
       </header>
-      {clientData.length > 0 && searchBar}
+      <div className="search-bar-and-nro-people">
+        {clientData.length > 0 && searchBar}
+        {clientData.length > 0 && (
+          <p className="filtered-users">
+            Filtered users: {filteredUsers.length}
+          </p>
+        )}
+      </div>
     </div>
   );
 }

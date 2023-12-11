@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import PDFFile from "./InvoicePDF";
-import { PDFDownloadLink, BlobProvider } from "@react-pdf/renderer";
+import { BlobProvider } from "@react-pdf/renderer";
 import "../App.css";
 
 function PersonCard({
@@ -12,13 +12,23 @@ function PersonCard({
   companyData,
   productData,
   setFilteredUsers,
+  imageUrl,
 }) {
   const [showDetails, setShowDetails] = useState(false);
   const [deleteUserConfirmation, setDeleteUserConfirmation] = useState(false);
 
   function handleShowDetailsStatus() {
     setShowDetails((prevStatus) => !prevStatus);
-    console.log("clicado");
+  }
+
+  function handleCloseCardDetails(event) {
+    if (event.key == "Escape") setShowDetails(false);
+  }
+
+  if (showDetails) {
+    document.addEventListener("keydown", handleCloseCardDetails);
+  } else {
+    document.removeEventListener("keydown", handleCloseCardDetails);
   }
 
   function deleteUser(event) {
@@ -28,8 +38,9 @@ function PersonCard({
 
     setFilteredUsers(updatedPeopleData);
     setDeleteUserConfirmation((prevStatus) => !prevStatus);
-    if (showDetails) handleShowDetailsStatus();
+    // if (showDetails) handleShowDetailsStatus();
   }
+  const bornAt = new Date(person.birthday).toLocaleDateString("en-US");
 
   const fullname = person.firstname + " " + person.lastname;
   const { street, city, country } = person.address;
@@ -48,33 +59,37 @@ function PersonCard({
           <strong>Email:</strong> {person.email}
         </p>
         <p>
-          <strong>Birth Date:</strong> {person.birthday}
+          <strong>Birth Date:</strong> {bornAt}
         </p>
         <p>
           <strong>Phone:</strong> {person.phone}
         </p>
         <p>
           <strong>Address:</strong>
-          {street}, {city} - {country}2222
+          {street}, {city} - {country}
         </p>
         <p>
           <strong>Credit Card:</strong> {creditCardData.type}
         </p>
         <BlobProvider
-          fileName={"TEST"}
           document={
             <PDFFile
               person={person}
               company={companyData.name}
               productData={productData}
+              imageUrl={imageUrl}
             />
           }
         >
-          {({ url }) => (
-            <a href={url} target="_blank" className="pdf-link">
-              Visualize PDF
-            </a>
-          )}
+          {({ blob, url, loading, error }) => {
+            if (loading) return "Loading document...";
+            else
+              return (
+                <a href={url} target="_blank" className="pdf-link">
+                  Invoice PDF
+                </a>
+              );
+          }}
         </BlobProvider>
       </div>
     </div>
@@ -105,7 +120,7 @@ function PersonCard({
         <div className="front">
           <section className="main-info">
             <h2 className="fullname" onClick={handleShowDetailsStatus}>
-              {fullname}
+              {fullname},<span className="bord-at"> born at {bornAt}</span>
             </h2>
             <div className="card-interactions">
               <button
