@@ -37,7 +37,7 @@ function DateForm({ fetchClientData, setShowWelcomeMessage }) {
           onChange={handleChange}
           value={dateRange.endDate}
         />
-        <button type="submit">Submit</button>
+        <button type="submit">Search</button>
       </form>
     </>
   );

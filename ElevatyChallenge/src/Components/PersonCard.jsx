@@ -13,6 +13,7 @@ function PersonCard({
   productData,
   setFilteredUsers,
   imageUrl,
+  deletionIndex,
 }) {
   const [showDetails, setShowDetails] = useState(false);
   const [deleteUserConfirmation, setDeleteUserConfirmation] = useState(false);
@@ -40,7 +41,11 @@ function PersonCard({
     setDeleteUserConfirmation((prevStatus) => !prevStatus);
     // if (showDetails) handleShowDetailsStatus();
   }
-  const bornAt = new Date(person.birthday).toLocaleDateString("en-US");
+  const bornAt = new Date(person.birthday).toLocaleDateString("en-US", {
+    month: "2-digit",
+    day: "2-digit",
+    year: "numeric",
+  });
 
   const fullname = person.firstname + " " + person.lastname;
   const { street, city, country } = person.address;

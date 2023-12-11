@@ -6,12 +6,13 @@ body {
 
 header {
   min-height: 5vh;
-  background: #232121;
+  /* background: #232121; */
+  background: linear-gradient(to right, #1e1c1c, #181616);
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: #fbfbfb;
-  box-shadow: 0px 4px 10px rgba(172, 172, 172, 0.75);
+  box-shadow: 0px 6px 15px rgba(172, 172, 172, 0.7);
   flex-wrap: wrap;
   width: 100vw;
 }
@@ -33,8 +34,12 @@ main {
 .welcome-message {
   color: grey;
   margin-top: 5%;
-  transform: scale(1.7);
-  opacity: 0.5;
+  /* transform: scale(2.5); */
+  opacity: 0.35;
+  font-size: 3vw;
+  letter-spacing: 1px;
+  word-wrap: break-word;
+  /* text-shadow: 1px 2px 4px rgba(120, 120, 120, 0.7); */
 }
 
 .logo {
@@ -46,12 +51,20 @@ main {
   display: flex;
   justify-content: center;
   column-gap: 22%;
-  align-items: center;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  row-gap: 1rem;
 }
 
 .filtered-users {
   font-size: 1.5rem;
   font-weight: bold;
+  padding-right: 2rem;
+  padding-bottom: 4px;
+  padding-left: 7px;
+  border-bottom: 2px solid rgb(204, 204, 204);
+  border-right: 2px solid rgb(204, 204, 204);
+  border-bottom-right-radius: 5px;
 }
 
 .people-section {
@@ -167,7 +180,7 @@ main {
   column-gap: 15px;
   color: white;
   flex-wrap: wrap;
-  margin-right: 5vw;
+  margin-right: 1vw;
 }
 
 .date-form input[type="date"] {
@@ -185,11 +198,14 @@ main {
   background: #ffa300;
   color: black;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 3px;
   font-weight: bold;
   padding: 0.5rem;
   outline-style: none;
   border: none;
+  text-align: center;
+  flex-basis: 15%;
+  font-size: 0.95rem;
 }
 
 .date-form button[type="submit"]:hover {
@@ -287,7 +303,7 @@ main {
 }
 
 .pdf-link {
-  color: #374357;
+  color: #14459a;
   font-weight: bold;
 }
 

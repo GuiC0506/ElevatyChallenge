@@ -274,7 +274,11 @@ function PDFFile({ person, company, productData, imageUrl }) {
               Date of issue
             </Text>
             <Text style={styles.invoiceDate}>
-              {new Date().toLocaleDateString("en-US")}
+              {new Date().toLocaleDateString("en-US", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+              })}
             </Text>
           </View>
           <View style={{ width: "70%" }} id="table">
@@ -365,7 +369,12 @@ function PDFFile({ person, company, productData, imageUrl }) {
         <View>
           <Text style={{ fontSize: "12px" }}>TERMS</Text>
           <Text style={{ fontSize: "10px" }}>
-            Please pay invoice by {new Date().toLocaleDateString("en-US")}
+            Please pay invoice by{" "}
+            {new Date().toLocaleDateString("en-US", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            })}
           </Text>
         </View>
       </Page>

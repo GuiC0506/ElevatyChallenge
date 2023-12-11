@@ -69,8 +69,6 @@ function App() {
     setImageURLs(urls);
   }
 
-  const welcomeMessage = <h1 className="welcome-message">You are welcome!</h1>;
-
   useEffect(() => {
     fetchCreditCardData(),
       fetchCompanyName(),

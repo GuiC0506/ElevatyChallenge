@@ -20,8 +20,9 @@ function Main({
         {clientData.map((person, i) => {
           return (
             <PersonCard
-              key={person.id}
+              key={i}
               id={person.id}
+              deletionIndex={i}
               person={person}
               clientData={clientData}
               creditCardData={creditCardData}
