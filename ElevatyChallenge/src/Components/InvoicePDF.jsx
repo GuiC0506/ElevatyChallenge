@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
 
   companyName: {
     backgroundColor: "#dde4fe",
-    color: "grey",
+    color: "#b5c9e3",
     width: "70%",
     marginBottom: "20px",
   },
@@ -98,6 +98,45 @@ const styles = StyleSheet.create({
     columnGap: "25px",
     justifyContent: "space-between",
     marginTop: "10px",
+  },
+
+  invoiceDate: {
+    backgroundColor: "#dde4fe",
+    color: "#5e707a",
+    fontSize: "12px",
+  },
+
+  resumeSection: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    marginTop: "20px",
+    width: "100%",
+  },
+
+  resume: {
+    display: "flex",
+    flexDirection: "row",
+    fontSize: "10px",
+    width: "25%",
+  },
+
+  resumeLeftSide: {
+    color: "#5e707a",
+    flexBasis: "40%",
+  },
+
+  resumeRightSide: {
+    color: "#5e707a",
+    backgroundColor: "#dde4fe",
+    flexBasis: "60%",
+  },
+
+  sectionSeparation: {
+    height: "2px",
+    width: "25%",
+    marginLeft: "394px",
+    backgroundColor: "#5e707a",
   },
 });
 
@@ -153,8 +192,11 @@ function PDFFile({ person, company, productData }) {
   return (
     <Document style={{ padding: 0, margin: 0 }}>
       <Page style={styles.body}>
-        <Text id="company-name" style={styles.companyName}>
-          Company name: {company}
+        <Text
+          id="company-name"
+          style={[styles.companyName, { color: "#5e707a" }]}
+        >
+          {company}
         </Text>
         <View style={[styles.locationAndEmails]}>
           <View style={styles.section}>
@@ -169,10 +211,10 @@ function PDFFile({ person, company, productData }) {
             <Text>{person.website}</Text>
           </View>
         </View>
-        <Text style={{ fontSize: "10px", marginVertical: "4px" }}>
-          Billed to
-        </Text>
-        <View style={[styles.section, { marginBottom: "20px" }]}>
+        <Text style={{ fontSize: "10px", marginTop: "4px" }}>Billed to</Text>
+        <View
+          style={[styles.section, { marginBottom: "20px", marginTop: "0px" }]}
+        >
           <Text>
             {person.firstname} {person.lastname}
           </Text>
@@ -185,10 +227,17 @@ function PDFFile({ person, company, productData }) {
         </View>
         <View id="bottom-section" style={styles.bottomSection}>
           <View id="invoice-date">
-            <Text>Invoice</Text>
-            <Text>Invoice number</Text>
-            <Text>{new Date().toLocaleDateString("en-US")}</Text>
-            <Text>Invoice</Text>
+            <Text style={{ color: "#5e707a" }}>Invoice</Text>
+            <Text style={{ color: "#5e707a", fontSize: "12px" }}>
+              Invoice number
+            </Text>
+            <Text style={styles.invoiceDate}>
+              {new Date().toLocaleDateString("en-US")}
+            </Text>
+            <Text style={{ color: "#5e707a", fontSize: "12px" }}>
+              Date of issue
+            </Text>
+            <Text style={styles.invoiceDate}>00001</Text>
           </View>
           <View style={{ width: "70%" }} id="table">
             <View id="table-header" style={styles.tableHeader}>
@@ -232,6 +281,23 @@ function PDFFile({ person, company, productData }) {
             </View>
           </View>
         </View>
+        <View style={styles.resumeSection}>
+          <View style={styles.resume}>
+            <View style={styles.resumeLeftSide}>
+              <Text>SUBTOTAL</Text>
+              <Text>DISCOUNT</Text>
+              <Text>TAX RATE</Text>
+              <Text>TAX</Text>
+            </View>
+            <View style={styles.resumeRightSide}>
+              <Text style={{ textAlign: "right" }}>$0</Text>
+              <Text style={{ textAlign: "right" }}>$0</Text>
+              <Text style={{ textAlign: "right" }}>$0</Text>
+              <Text style={{ textAlign: "right" }}>$0</Text>
+            </View>
+          </View>
+        </View>
+        <View style={styles.sectionSeparation}></View>
       </Page>
     </Document>
   );

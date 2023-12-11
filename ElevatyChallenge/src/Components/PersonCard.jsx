@@ -8,24 +8,25 @@ function PersonCard({
   id,
   person,
   clientData,
-  setClientData,
   creditCardData,
   companyData,
   productData,
+  setFilteredUsers,
 }) {
   const [showDetails, setShowDetails] = useState(false);
   const [deleteUserConfirmation, setDeleteUserConfirmation] = useState(false);
 
   function handleShowDetailsStatus() {
     setShowDetails((prevStatus) => !prevStatus);
+    console.log("clicado");
   }
 
-  function deleteUser() {
+  function deleteUser(event) {
     const updatedPeopleData = clientData.filter((person) => {
       return person.id != id;
     });
 
-    setClientData(updatedPeopleData);
+    setFilteredUsers(updatedPeopleData);
     setDeleteUserConfirmation((prevStatus) => !prevStatus);
     if (showDetails) handleShowDetailsStatus();
   }
@@ -36,15 +37,29 @@ function PersonCard({
     <div className="details">
       <span className="section-separation"></span>
       <div className="details">
-        <p>Id: {person.id}</p>
-        <p>Fullname: {fullname}</p>
-        <p>Email: {person.email}</p>
-        <p>Birth Date: {person.birthday}</p>
-        <p>Phone: {person.phone}</p>
         <p>
-          Address: {street}, {city} - {country}2222
+          <strong>Id:</strong> {person.id}
         </p>
-        <p>Credit Card: {creditCardData.type}</p>
+        <p>
+          <strong>Fullname:</strong>
+          {fullname}
+        </p>
+        <p>
+          <strong>Email:</strong> {person.email}
+        </p>
+        <p>
+          <strong>Birth Date:</strong> {person.birthday}
+        </p>
+        <p>
+          <strong>Phone:</strong> {person.phone}
+        </p>
+        <p>
+          <strong>Address:</strong>
+          {street}, {city} - {country}2222
+        </p>
+        <p>
+          <strong>Credit Card:</strong> {creditCardData.type}
+        </p>
         <BlobProvider
           fileName={"TEST"}
           document={
@@ -56,7 +71,7 @@ function PersonCard({
           }
         >
           {({ url }) => (
-            <a href={url} target="_blank">
+            <a href={url} target="_blank" className="pdf-link">
               Visualize PDF
             </a>
           )}
@@ -89,7 +104,9 @@ function PersonCard({
       <div className="person-card-inner" id={id}>
         <div className="front">
           <section className="main-info">
-            <h2 className="fullname">{fullname}</h2>
+            <h2 className="fullname" onClick={handleShowDetailsStatus}>
+              {fullname}
+            </h2>
             <div className="card-interactions">
               <button
                 className="show-details"

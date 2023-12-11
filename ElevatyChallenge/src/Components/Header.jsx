@@ -9,8 +9,11 @@ function Header({
   setFilteredUsers,
   clientData,
   setSearchItem,
+  filteredUsers,
+  setNoShowUser,
 }) {
   const [renderSearchBar, setRenderSearchBar] = useState(false);
+
   function handleInputChange(event) {
     const itemSearched = event.target.value;
     setSearchItem(itemSearched);
@@ -20,6 +23,7 @@ function Header({
       return fullname.toLowerCase().includes(itemSearched.toLowerCase());
     });
     setFilteredUsers(filteredItems);
+    filteredUsers.length === 0 ? setNoShowUser(true) : setNoShowUser(false);
   }
 
   const searchBar = (
@@ -28,24 +32,26 @@ function Header({
       <input
         className="search-bar"
         type="text"
-        placeholder="ex. Joe"
+        placeholder="Search name"
         onChange={handleInputChange}
       />
     </div>
   );
 
   return (
-    <header>
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <img src={elevatyLogo} alt="logo" className="logo" />
-        <h1 className="page-title">{title}</h1>
-        {renderSearchBar && searchBar}
-      </div>
-      <DateForm
-        fetchClientData={fetchClientData}
-        setRenderSearchBar={setRenderSearchBar}
-      />
-    </header>
+    <div>
+      <header>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <img src={elevatyLogo} alt="logo" className="logo" />
+          <h1 className="page-title">{title}</h1>
+        </div>
+        <DateForm
+          fetchClientData={fetchClientData}
+          setRenderSearchBar={setRenderSearchBar}
+        />
+      </header>
+      {clientData.length > 0 && searchBar}
+    </div>
   );
 }
 

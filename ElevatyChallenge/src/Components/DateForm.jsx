@@ -16,7 +16,6 @@ function DateForm({ fetchClientData, setRenderSearchBar }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    setRenderSearchBar((prev) => !prev);
     fetchClientData(dateRange.startDate, dateRange.endDate);
   }
 

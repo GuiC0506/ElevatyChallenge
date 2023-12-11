@@ -1,17 +1,19 @@
 /* HEADER STYLE */
 body {
-  /* overflow-x: hidden; */
   background: #fbfbfb;
+  overflow-x: hidden;
 }
 
 header {
-  min-height: 8vh;
-  background: #ffa300;
+  min-height: 5vh;
+  background: #232121;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: white;
+  color: #fbfbfb;
   box-shadow: 0px 4px 10px rgba(172, 172, 172, 0.75);
+  flex-wrap: wrap;
+  width: 100vw;
 
 }
 
@@ -19,36 +21,32 @@ header .page-title {
   font-weight: bold;
   font-size: 1.8rem;
   margin-left: 0.3rem;
-  /* border-left: 1px solid lightgrey; */
   padding-left: 1rem;
-  color: #2e2e2e;
+  margin-right: 20px;
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} 
+
 .logo {
-  width: 80px;
+  width: 60px;
 }
 
 .people-section {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  width: 80%;
-  margin: 0 auto;
-  margin-top: 20px;
+  margin-bottom: 1rem;
 }
 
 .person-card {
-  /* float:right; */
-  clear:left;
-  min-width: 40vw;
+  width: 40vw;
   border-radius: 3px;
   background: #e4e4e4;
-  padding: 0.7rem;
+  padding: 0.9rem;
   color: #393939;
-  /* display: inline-block; */
   margin: 0.5rem;
   margin-top: 1rem;
-  vertical-align: bottom;
   position: relative;
 }
 
@@ -58,12 +56,38 @@ header .page-title {
 
 }
 
-.person-card-inner .main-info {
+.person-card .main-info {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 
+@media (max-width: 1000px) {
+  .person-card .main-info {
+    justify-content: center;
+  }
+
+  .person-card {
+    min-width: 266px;
+  }
+
+  .page-title {
+    font-size: 50vw;
+  }
+
+  header {
+    justify-content: center;
+  }
+
+
+}
+
+@media (max-width: 490px) {
+  .date-form {
+    justify-content: center;
+  }
+}
 .section-separation {
   display: block;
   margin: 0 auto;
@@ -76,6 +100,7 @@ header .page-title {
 .card-interactions {
   display: flex;
   column-gap: 5px;
+  min-width: 23%;
 }
 
 .card-interactions button {
@@ -83,8 +108,6 @@ header .page-title {
   border-radius: 4px;
   cursor: pointer;
   border: none;
-  /* font-weight: bold; */
-  /* border: 1.5px solid #393e46; */
 }
 
 .card-interactions .show-details {
@@ -103,7 +126,7 @@ header .page-title {
 }
 
 .card-interactions .drop-user-warning:hover {
-  background-color: #c5325c;
+  background-color: #e20241;
 }
 
 .details {
@@ -112,19 +135,17 @@ header .page-title {
 
 .date-form {
   display: flex;
-  min-width: 30%;
+  min-width: 30vw;
   align-items: center;
-  column-gap: 5px;
-  margin-right: 10vw;
-  color: #393939;
+  column-gap: 15px;
+  color: white;
+  flex-wrap: wrap;
 }
 
 .date-form input[type="date"] {
   padding-inline: 5px;
   padding-block: 3px;
   text-align: center;
-  letter-spacing: 0.2ch;
-
 }
 
 .date-form label {
@@ -133,8 +154,8 @@ header .page-title {
 }
 
 .date-form button[type="submit"] {
-  background: #393939;
-  color: white;
+  background: #ffa300;
+  color: black;
   cursor: pointer;
   border-radius: 5px;
   font-weight: bold;
@@ -144,7 +165,7 @@ header .page-title {
 }
 
 .date-form button[type="submit"]:hover {
-  background: #406d8b;
+  background: #fdb840;
 }
 
 ::-webkit-calendar-picker-indicator{
@@ -152,6 +173,7 @@ header .page-title {
   padding: 3px;
   cursor: pointer;
   border-radius: 3px;
+  color: red;
 }
 
 .user-deletion {
@@ -170,6 +192,7 @@ header .page-title {
   border-radius: inherit;
   gap: 0.7rem;
   color: white;
+  flex-wrap: wrap;
 }
 
 .deletion-options {
@@ -203,7 +226,7 @@ header .page-title {
   font-weight: bold;
   font-size: 1.4rem;
   text-decoration: underline;
-  /* border-left: 2px solid #B4B8AB; */
+  cursor: pointer;
 }
 
 .user-top-delete {
@@ -212,15 +235,49 @@ header .page-title {
 }
 
 .search-section {
-  margin-left: 2rem;
+  width: 15vw;
+  margin: 0 auto;
+  margin-top: 2rem;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .search-bar {
   margin-left: 0.5rem;
   outline: none;
+  border: none;
+  border-bottom: 1px solid grey;
+  width: 90%;
+  background: transparent;
+  font-size: 1rem;
 }
+
+.search-bar::placeholder {
+  color: #374357;
+}
+
 .search-icon {
   width: 1rem;
+}
+
+.pdf-link {
+  color: #374357;
+  font-weight: bold;
+}
+
+.pdf-link:hover {
+  color: #485a7a;
+}
+
+footer {
+  position: sticky;
+  width: 100%;
+  height: 4vh;
+  top: 100%;
+  background: #0F1C2E;
+  color: white;
+  text-align: center;
+  line-height: 4vh;
+  margin-top: 1rem;
 }

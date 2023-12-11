@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PersonCard from "./PersonCard";
 import "../App.css";
 
@@ -8,9 +8,11 @@ function Main({
   creditCardData,
   companyData,
   productData,
+  setFilteredUsers,
   filteredUsers,
+  showNoUser,
 }) {
-  // console.log(filteredUsers);
+  const noUsers = <h1>No user</h1>;
   return (
     <main>
       <section className="people-section">
@@ -25,9 +27,11 @@ function Main({
               creditCardData={creditCardData}
               companyData={companyData}
               productData={productData}
+              setFilteredUsers={setFilteredUsers}
             />
           );
         })}
+        {showNoUser && noUsers}
       </section>
     </main>
   );

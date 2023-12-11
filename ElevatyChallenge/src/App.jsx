@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "./Components/Header";
 import Main from "./Components/Main";
+import Footer from "./Components/Footer";
 import "./App.css";
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
   const [productData, setProductData] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [searchItem, setSearchItem] = useState("");
+  const [showNoUser, setNoShowUser] = useState(false);
 
   async function fetchClientData(startDate, endDate) {
     const response = await fetch(
@@ -52,7 +54,7 @@ function App() {
 
   async function fetchProductsData() {
     const response = await fetch(
-      "https://fakerapi.it/api/v1/products?_quantity=10"
+      "https://fakerapi.it/api/v1/products?_quantity=8"
     );
     const { data } = await response.json();
     setProductData(data);
@@ -71,6 +73,7 @@ function App() {
         clientData={clientData}
         setSearchItem={setSearchItem}
         filteredUsers={filteredUsers}
+        setNoShowUser={setNoShowUser}
       />
       <Main
         clientData={filteredUsers}
@@ -78,7 +81,12 @@ function App() {
         companyData={companyData}
         creditCardData={creditCardData}
         productData={productData}
+        setFilteredUsers={setFilteredUsers}
+        setSearchItem={setSearchItem}
+        filteredUsers={filteredUsers}
+        showNoUser={showNoUser}
       />
+      {/* <Footer /> */}
     </>
   );
 }
