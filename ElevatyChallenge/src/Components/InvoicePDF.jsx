@@ -208,7 +208,7 @@ function PDFFile({ person, company, productData, imageUrl }) {
             { flexBasis: "20%", textAlign: "right" },
           ]}
         >
-          {product.totalPrice}
+          {usDollarFormmat.format(product.totalPrice)}
         </Text>
       </View>
     );
