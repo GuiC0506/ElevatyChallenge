@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#dde4fe",
     color: "#5e707a",
     fontSize: "12px",
+    paddingLeft: "3px",
   },
 
   resumeSection: {
@@ -170,9 +171,12 @@ function PDFFile({ person, company, productData, imageUrl }) {
     style: "currency",
     currency: "USD",
   });
-  let totalPrice = 0;
+  let totalPriceNoTax = 0;
   const prices = products.map((product) => product.totalPrice);
-  prices.forEach((price) => (totalPrice += price));
+  prices.forEach((price) => (totalPriceNoTax += price));
+  const tax = 0.05;
+  const taxOverTotalValue = totalPriceNoTax * tax;
+  const totalPriceTaxed = taxOverTotalValue + totalPriceNoTax;
 
   const tableData = products.map((product) => {
     return (
@@ -204,13 +208,12 @@ function PDFFile({ person, company, productData, imageUrl }) {
             { flexBasis: "20%", textAlign: "right" },
           ]}
         >
-          {product.qty}
+          {product.totalPrice}
         </Text>
       </View>
     );
   });
 
-  const { street, city, country, zipcode } = person.address;
   return (
     <Document style={{ padding: 0, margin: 0 }}>
       <Page style={styles.body}>
@@ -218,15 +221,16 @@ function PDFFile({ person, company, productData, imageUrl }) {
           id="company-name"
           style={[styles.companyName, { color: "#5e707a" }]}
         >
-          {company}
+          {company.name}
         </Text>
         <View style={styles.topSection}>
           <View style={[styles.locationAndEmails]}>
             <View style={styles.section}>
               <Text>
-                {street}, {city} - {country}
+                {company.addresses[0].street}, {company.addresses[0].city} /{" "}
+                {company.addresses[0].country}
               </Text>
-              <Text>Zip Code: {zipcode}</Text>
+              <Text>Zip Code: {company.addresses[0].zipcode}</Text>
             </View>
             <View style={styles.section}>
               <Text>{person.phone}</Text>
@@ -252,11 +256,12 @@ function PDFFile({ person, company, productData, imageUrl }) {
           <Text>
             {person.firstname} {person.lastname}
           </Text>
-          <Text>{street}</Text>
+          <Text>{person.street}</Text>
           <Text>
-            {street}, {city} - {country}
+            {person.address.street}, {person.address.city} -{" "}
+            {person.address.country}
           </Text>
-          <Text>Zip Code: {zipcode}</Text>
+          <Text>Zip Code: {person.address.zipcode}</Text>
           <Text>{person.phone}</Text>
         </View>
         <View id="bottom-section" style={styles.bottomSection}>
@@ -332,7 +337,9 @@ function PDFFile({ person, company, productData, imageUrl }) {
               <Text>TAX</Text>
             </View>
             <View style={styles.resumeRightSide}>
-              <Text style={{ textAlign: "right" }}>$0</Text>
+              <Text style={{ textAlign: "right" }}>
+                {usDollarFormmat.format(totalPriceNoTax)}
+              </Text>
               <Text
                 style={{
                   textAlign: "right",
@@ -341,8 +348,10 @@ function PDFFile({ person, company, productData, imageUrl }) {
               >
                 $0
               </Text>
-              <Text style={{ textAlign: "right" }}>5%</Text>
-              <Text style={{ textAlign: "right" }}>$0.00</Text>
+              <Text style={{ textAlign: "right" }}>{tax * 100}%</Text>
+              <Text style={{ textAlign: "right" }}>
+                {usDollarFormmat.format(taxOverTotalValue)}
+              </Text>
             </View>
           </View>
         </View>
@@ -363,7 +372,7 @@ function PDFFile({ person, company, productData, imageUrl }) {
               marginTop: "3px",
             }}
           >
-            {usDollarFormmat.format(totalPrice)}
+            {usDollarFormmat.format(totalPriceTaxed)}
           </Text>
         </View>
         <View>

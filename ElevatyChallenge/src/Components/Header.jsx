@@ -5,25 +5,12 @@ import searchIcon from "../assets/search_icon.png";
 
 function Header({
   fetchClientData,
-  setFilteredUsers,
   clientData,
-  setSearchItem,
   setShowWelcomeMessage,
   filteredUsers,
+  handleInputChange,
+  searchItem,
 }) {
-  const [renderSearchBar, setRenderSearchBar] = useState(false);
-
-  function handleInputChange(event) {
-    const itemSearched = event.target.value;
-    setSearchItem(itemSearched);
-
-    const filteredItems = clientData.filter((client) => {
-      const fullname = client.firstname + " " + client.lastname;
-      return fullname.toLowerCase().includes(itemSearched.toLowerCase());
-    });
-    setFilteredUsers(filteredItems);
-  }
-
   const searchBar = (
     <div className="search-section">
       <img className="search-icon" src={searchIcon} alt="search-icon" />
@@ -32,6 +19,7 @@ function Header({
         type="text"
         placeholder="Search name"
         onChange={handleInputChange}
+        value={searchItem}
       />
     </div>
   );

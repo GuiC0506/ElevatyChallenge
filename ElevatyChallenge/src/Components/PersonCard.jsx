@@ -7,13 +7,15 @@ import "../App.css";
 function PersonCard({
   id,
   person,
-  clientData,
   creditCardData,
   companyData,
   productData,
   setFilteredUsers,
   imageUrl,
-  deletionIndex,
+  deleteUser,
+  setClientData,
+  handleInputChange,
+  searchItem,
 }) {
   const [showDetails, setShowDetails] = useState(false);
   const [deleteUserConfirmation, setDeleteUserConfirmation] = useState(false);
@@ -33,19 +35,25 @@ function PersonCard({
   }
 
   function deleteUser(event) {
-    const updatedPeopleData = clientData.filter((person) => {
-      return person.id != id;
-    });
+    setClientData((prevClientData) => {
+      const updatedClientData = prevClientData.filter(
+        (client) => client.id !== id
+      );
+      handleInputChange({ target: { value: searchItem } });
+      setFilteredUsers(updatedClientData);
+      setDeleteUserConfirmation((prevStatus) => !prevStatus);
+      if (showDetails) handleShowDetailsStatus();
 
-    setFilteredUsers(updatedPeopleData);
-    setDeleteUserConfirmation((prevStatus) => !prevStatus);
-    // if (showDetails) handleShowDetailsStatus();
+      return updatedClientData;
+    });
   }
+
   const bornAt = new Date(person.birthday).toLocaleDateString("en-US", {
     month: "2-digit",
     day: "2-digit",
     year: "numeric",
   });
+  console.log("vai se fude seu merda 3");
 
   const fullname = person.firstname + " " + person.lastname;
   const { street, city, country } = person.address;
@@ -80,7 +88,7 @@ function PersonCard({
           document={
             <PDFFile
               person={person}
-              company={companyData.name}
+              company={companyData}
               productData={productData}
               imageUrl={imageUrl}
             />

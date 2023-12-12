@@ -10,6 +10,10 @@ function Main({
   setFilteredUsers,
   showWelcomeMessage,
   imageUrls,
+  setClientData,
+  deleteUser,
+  handleInputChange,
+  searchItem,
 }) {
   return (
     <main>
@@ -22,14 +26,17 @@ function Main({
             <PersonCard
               key={i}
               id={person.id}
-              deletionIndex={i}
               person={person}
-              clientData={clientData}
               creditCardData={creditCardData}
               companyData={companyData}
               productData={productData}
-              setFilteredUsers={setFilteredUsers}
               imageUrl={imageUrls[Math.floor(Math.random() * imageUrls.length)]}
+              clientData={clientData}
+              deleteUser={deleteUser}
+              setClientData={setClientData}
+              handleInputChange={handleInputChange}
+              searchItem={searchItem}
+              setFilteredUsers={setFilteredUsers}
             />
           );
         })}

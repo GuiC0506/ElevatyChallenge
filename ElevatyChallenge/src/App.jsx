@@ -13,6 +13,20 @@ function App() {
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(false);
   const [imageUrls, setImageURLs] = useState([]);
 
+  function handleInputChange(event) {
+    const itemSearched = event.target.value;
+    setSearchItem(itemSearched);
+    if (itemSearched === "") {
+      setFilteredUsers(clientData);
+    } else {
+      const filteredItems = clientData.filter((client) => {
+        const fullname = client.firstname + " " + client.lastname;
+        return fullname.toLowerCase().includes(itemSearched.toLowerCase());
+      });
+      setFilteredUsers(filteredItems);
+    }
+  }
+
   async function fetchClientData(startDate, endDate) {
     const response = await fetch(
       `https://fakerapi.it/api/v1/persons?_quantity=50&_birthday_start=${startDate}&_birthday_end=${endDate}`
@@ -81,11 +95,11 @@ function App() {
     <>
       <Header
         fetchClientData={fetchClientData}
-        setFilteredUsers={setFilteredUsers}
         clientData={clientData}
-        setSearchItem={setSearchItem}
         setShowWelcomeMessage={setShowWelcomeMessage}
         filteredUsers={filteredUsers}
+        handleInputChange={handleInputChange}
+        searchItem={searchItem}
       />
       <Main
         clientData={filteredUsers}
@@ -95,6 +109,9 @@ function App() {
         setFilteredUsers={setFilteredUsers}
         showWelcomeMessage={showWelcomeMessage}
         imageUrls={imageUrls}
+        setClientData={setClientData}
+        handleInputChange={handleInputChange}
+        searchItem={searchItem}
       />
     </>
   );

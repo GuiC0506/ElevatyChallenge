@@ -50,7 +50,7 @@ main {
   margin-top: 2rem;
   display: flex;
   justify-content: center;
-  column-gap: 22%;
+  column-gap: 18%;
   align-items: flex-end;
   flex-wrap: wrap;
   row-gap: 1rem;
@@ -248,7 +248,7 @@ main {
 .user-deletion button {
   padding: 0.5rem;
   border-radius: 3px;
-  width: 100px;
+  width: 120px;
   font-weight: bold;
   cursor: pointer;
   border: none;
