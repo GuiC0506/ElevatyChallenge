@@ -11,7 +11,6 @@ function Main({
   showWelcomeMessage,
   imageUrls,
   setClientData,
-  deleteUser,
   handleInputChange,
   searchItem,
 }) {
@@ -31,7 +30,6 @@ function Main({
               companyData={companyData}
               productData={productData}
               imageUrl={imageUrls[Math.floor(Math.random() * imageUrls.length)]}
-              clientData={clientData}
               deleteUser={deleteUser}
               setClientData={setClientData}
               handleInputChange={handleInputChange}
