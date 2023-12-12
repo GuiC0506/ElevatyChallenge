@@ -259,9 +259,17 @@ main {
   background-color: #c70039;
 }
 
+.delete-warning:hover {
+  background-color: #e20241;
+}
+
 .delete-cancel {
   background: #cee8ff;
   color: black !important;
+}
+
+.delete-cancel:hover {
+  background: #98cefd;
 }
 
 .fullname {

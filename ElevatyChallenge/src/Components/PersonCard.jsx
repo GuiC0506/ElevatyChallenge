@@ -12,7 +12,6 @@ function PersonCard({
   productData,
   setFilteredUsers,
   imageUrl,
-  deleteUser,
   setClientData,
   handleInputChange,
   searchItem,
@@ -28,11 +27,9 @@ function PersonCard({
     if (event.key == "Escape") setShowDetails(false);
   }
 
-  if (showDetails) {
-    document.addEventListener("keydown", handleCloseCardDetails);
-  } else {
-    document.removeEventListener("keydown", handleCloseCardDetails);
-  }
+  showDetails
+    ? document.addEventListener("keydown", handleCloseCardDetails)
+    : document.removeEventListener("keydown", handleCloseCardDetails);
 
   function deleteUser(event) {
     setClientData((prevClientData) => {
@@ -53,7 +50,6 @@ function PersonCard({
     day: "2-digit",
     year: "numeric",
   });
-  console.log("vai se fude seu merda 3");
 
   const fullname = person.firstname + " " + person.lastname;
   const { street, city, country } = person.address;

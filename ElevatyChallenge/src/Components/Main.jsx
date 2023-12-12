@@ -30,7 +30,6 @@ function Main({
               companyData={companyData}
               productData={productData}
               imageUrl={imageUrls[Math.floor(Math.random() * imageUrls.length)]}
-              deleteUser={deleteUser}
               setClientData={setClientData}
               handleInputChange={handleInputChange}
               searchItem={searchItem}
