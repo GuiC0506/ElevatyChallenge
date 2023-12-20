@@ -1,2 +1,1 @@
-# ElevatyChallenge
-React application to Elevaty Challenge
+# React Challenge
